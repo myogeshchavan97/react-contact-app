@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 
-const ContactForm = ({ addContact, contacts }) => {
+const ContactForm = ({ dispatch, contacts }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -17,13 +17,15 @@ const ContactForm = ({ addContact, contacts }) => {
         const emailExists = contacts.find((contact) => contact.email === email);
         if (!emailExists) {
           setErrorMsg('');
-          addContact({
-            name,
-            email,
-            phone,
-            id: Date.now()
+          dispatch({
+            type: 'ADD_CONTACT',
+            payload: {
+              name,
+              email,
+              phone,
+              id: Date.now()
+            }
           });
-
           setName('');
           setEmail('');
           setPhone('');
